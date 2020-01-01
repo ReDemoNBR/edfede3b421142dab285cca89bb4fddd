@@ -1,0 +1,50 @@
+{
+  "name": "edfede3b421142dab285cca89bb4fddd",
+  "version": "0.0.1",
+  "description": "$$$",
+  "main": "server/index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ReDemoNBR/edfede3b421142dab285cca89bb4fddd.git"
+  },
+  "keywords": [
+    "money"
+  ],
+  "author": "San 'rdn' Mônico <san@monico.com.br> (https://monico.com.br)",
+  "contributors": [
+    "San 'rdn' Mônico <san@monico.com.br> (https://monico.com.br)"
+  ],
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/ReDemoNBR/edfede3b421142dab285cca89bb4fddd/issues"
+  },
+  "homepage": "https://github.com/ReDemoNBR/edfede3b421142dab285cca89bb4fddd#readme",
+  "os": [
+    "android",
+    "linux"
+  ],
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "frameguard": "^3.1.0",
+    "helmet": "^3.21.2",
+    "inflection": "^1.12.0",
+    "pg": "^7.17.0",
+    "referrer-policy": "^1.2.0",
+    "sequelize": "^5.21.3"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "chai": "^4.2.0",
+    "eslint": "^6.8.0",
+    "mocha": "^6.2.2"
+  }
+}

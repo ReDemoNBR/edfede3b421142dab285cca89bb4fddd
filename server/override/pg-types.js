@@ -1,0 +1,1 @@
+require("pg").types.setTypeParser(20, value=>BigInt(value));
