@@ -1,6 +1,6 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = require("../db").define("user", {
+module.exports = require("../db").define("payable", {
     userId: {
         type: DataTypes.BIGINT,
         primaryKey: true,
@@ -16,12 +16,19 @@ module.exports = require("../db").define("user", {
         unique: false // exposing this to remember this is also a foreign key
     },
     status: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(10),
         allowNull: false
     },
     payment: {
         type: DataTypes.DATEONLY,
-        allowNull: false
+        allowNull: false,
+        get() {
+            return new Date(this.getDataValue("payment"));
+        },
+        set(value) {
+            value = new Date(value).toISOString().replace(/T.*$/, "");
+            this.setDataValue("payment", value);
+        }
     },
     value: {
         type: DataTypes.NUMERIC(20, 2),
@@ -34,5 +41,5 @@ module.exports = require("../db").define("user", {
         {fields: ["status"], using: "HASH"},
         {fields: ["payment"]}
     ],
-    tableName: "user"
+    tableName: "payable"
 });

@@ -1,6 +1,6 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = require("../db").define("account", {
+module.exports = require("../db").define("transaction", {
     id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV1,
@@ -21,10 +21,10 @@ module.exports = require("../db").define("account", {
         allowNull: false,
         comment: "only the last 4 digits are stored",
         get() {
-            return this.getDataValue("cardNumber").toString().padStart(16, "*");
+            return this.getDataValue("cardNumber")?.toString().padStart(16, "*");
         },
         set(value) {
-            this.setDataValue("cardNumber", value.substring(12));
+            this.setDataValue("cardNumber", value.substring(value.length-4));
         },
         field: "card_number"
     },
@@ -36,7 +36,16 @@ module.exports = require("../db").define("account", {
     cardExpiration: {
         type: DataTypes.DATEONLY,
         allowNull: false,
-        field: "card_expiration"
+        field: "card_expiration",
+        get() {
+            return new Date(this.getDataValue("cardExpiration"));
+        },
+        set(value) {
+            value = new Date(value);
+            value.setUTCDate(1); // set date to 1 => YYYY/MM/01
+            value = value.toISOString().replace(/T.*$/, "");
+            this.setDataValue("cardExpiration", value);
+        }
     },
     cvv: {
         type: DataTypes.SMALLINT,

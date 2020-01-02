@@ -1,12 +1,17 @@
 const {DataTypes} = require("sequelize");
 
-module.exports = require("../db").define("account", {
+module.exports = require("../db").define("paymentMethod", {
     id: {
         type: DataTypes.BIGINT,
-        defaultValue: DataTypes.UUIDV1,
         primaryKey: true,
         allowNull: false,
-        unique: true
+        unique: true,
+        autoIncrement: true,
+        autoIncrementIdentity: true
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
     },
     feeFixed: {
         type: DataTypes.NUMERIC(20, 2),
@@ -31,5 +36,5 @@ module.exports = require("../db").define("account", {
         {fields: ["fee_fixed"]},
         {fields: ["fee_percentage"]}
     ],
-    tableName: "transaction"
+    tableName: "payment_method"
 });

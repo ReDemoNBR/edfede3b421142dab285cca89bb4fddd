@@ -8,7 +8,9 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "bash scripts/start.sh",
+    "lint": "eslint .",
+    "test": "env DB_NAME=money_test DB_QUERY_LOGS=false PROCESS_WORKERS_COUNT=1 mocha --harmony --recursive --exit"
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,7 @@
     "frameguard": "^3.1.0",
     "helmet": "^3.21.2",
     "inflection": "^1.12.0",
+    "ms": "^2.1.2",
     "pg": "^7.17.0",
     "referrer-policy": "^1.2.0",
     "sequelize": "^5.21.3"
