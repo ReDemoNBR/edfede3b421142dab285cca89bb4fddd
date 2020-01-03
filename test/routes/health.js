@@ -1,6 +1,7 @@
 const {assert} = require("chai");
 const fetch = require("node-fetch");
-const worker = require("../../server/worker");const {
+const worker = require("../../server/worker");
+const {
     SERVER_API_PORT, PROCESS_WORKERS_COUNT, DEFAULT_LIMIT, DEFAULT_MAX_LIMIT,
     DB_TIMEZONE, API_HEADER_NAME, API_HEADER_VALUE, MAX_REQUEST_BODY_SIZE
 } = require("../../env");

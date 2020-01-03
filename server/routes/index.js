@@ -11,8 +11,9 @@ router.use(require("./middlewares/accepts"));
 router.post(bodyTreat);
 router.put(bodyTreat);
 router.patch(bodyTreat);
-router.get(require("./middlewares/query-limit-offset"));
+router.use(require("./middlewares/query-limit-offset"));
 router.use("/health", require("./health"));
+router.use("/user", require("./user"));
 
 router.use(require("./middlewares/not-found"));
 router.use(require("./middlewares/error-handler"));

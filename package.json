@@ -10,7 +10,7 @@
   "scripts": {
     "start": "bash scripts/start.sh",
     "lint": "eslint .",
-    "test": "env DB_NAME=money_test DB_QUERY_LOGS=false PROCESS_WORKERS_COUNT=1 mocha --harmony --recursive --exit"
+    "test": "env DB_NAME=money_test DB_QUERY_LOGS=false PROCESS_WORKERS_COUNT=1 DEFAULT_LIMIT=2 DEFAULT_MAX_LIMIT=4 mocha --harmony --recursive --exit"
   },
   "repository": {
     "type": "git",
@@ -46,7 +46,8 @@
     "ms": "^2.1.2",
     "pg": "^7.17.0",
     "referrer-policy": "^1.2.0",
-    "sequelize": "^5.21.3"
+    "sequelize": "^5.21.3",
+    "validator": "^12.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
