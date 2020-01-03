@@ -37,7 +37,6 @@ module.exports = Object.freeze({
     DEFAULT_MAX_LIMIT: abs(parseInt(env.DEFAULT_MAX_LIMIT)) || 1000,
     API_HEADER_NAME: env.API_HEADER_NAME || "X-Money-Version",
     API_HEADER_VALUE: env.API_HEADER_VALUE || "0.0.1",
-    SERVER_S3_HOST: env.SERVER_S3_HOST || "http://localhost:9000",
     MAX_REQUEST_BODY_SIZE: env.MAX_BODY_REQUEST_SIZE || "500KB",
 
     // PROCESS

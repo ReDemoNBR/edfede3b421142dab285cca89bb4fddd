@@ -36,7 +36,6 @@ describe("Test payable method database model", ()=>{
         // asserting payment year, month and date
         assert.strictEqual(payable.payment.getUTCFullYear(), sample.payment.getUTCFullYear());
         assert.strictEqual(payable.payment.getUTCMonth(), sample.payment.getUTCMonth());
-        console.log(payable.payment, sample.payment);
         assert.strictEqual(payable.payment.getUTCDate(), sample.payment.getUTCDate()); // should be saved as YYYY/MM/01
     });
     it("should read the payable that was just created", async()=>{
