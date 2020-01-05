@@ -16,7 +16,7 @@ module.exports = require("../db").define("payable", {
         unique: false // exposing this to remember this is also a foreign key
     },
     status: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(20),
         allowNull: false
     },
     payment: {

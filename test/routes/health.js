@@ -1,16 +1,19 @@
 const {assert} = require("chai");
 const fetch = require("node-fetch");
 const worker = require("../../server/worker");
+const db = require("../../server/db");
 const {
     SERVER_API_PORT, PROCESS_WORKERS_COUNT, DEFAULT_LIMIT, DEFAULT_MAX_LIMIT,
     DB_TIMEZONE, API_HEADER_NAME, API_HEADER_VALUE, MAX_REQUEST_BODY_SIZE
 } = require("../../env");
 
-before(async()=>{
-    await worker;
-});
 
 describe("Test health check routes", ()=>{
+    before(async()=>{
+        await db.drop();
+        await db.sync();
+        await worker;
+    });
     it("should check that the server is running", async()=>{
         const response = await fetch(`http://localhost:${SERVER_API_PORT}/health/ready`);
         const body = await response.text();

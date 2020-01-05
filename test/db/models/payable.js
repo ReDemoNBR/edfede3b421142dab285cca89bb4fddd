@@ -12,7 +12,7 @@ describe("Test payable method database model", ()=>{
     before(async()=>{
         await db.drop();
         await db.sync();
-        const paymentMethod = await PaymentMethod.create({name: "debit", feeFixed: 1, feePercentage: 5}); // sample payment method
+        const paymentMethod = await PaymentMethod.create({name: "debit", feeFixed: 1, feePercentage: 5, waitingDays: 0}); // sample payment method
         const transaction = await Transaction.create({
             description: "Xiaomi Mi9", value: "1000.87", cardNumber: "85239631995127410",
             cardHolder: "John Smith", cardExpiration: new Date(), cvv: 123,
@@ -21,6 +21,9 @@ describe("Test payable method database model", ()=>{
         const user = await User.create({name: "John Smith", email: "johnsmith@example.com"});
         sample.userId = user.id;
         sample.transactionId = transaction.id;
+    });
+    after(async()=>{
+        await db.drop();
     });
 
     it("should create a payable", async()=>{

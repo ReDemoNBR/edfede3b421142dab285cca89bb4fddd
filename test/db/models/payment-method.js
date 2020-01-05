@@ -1,10 +1,9 @@
 const {assert} = require("chai");
-const sample1 = {name: "debit", feeFixed: 0, feePercentage: 4.2};
-const sample2 = {name: "credit", feeFixed: 2, feePercentage: 5, active: false};
+const sample1 = {name: "debit", feeFixed: 0, feePercentage: 4.2, waitingDays: 0};
+const sample2 = {name: "credit", feeFixed: 2, feePercentage: 5, waitingDays: 30, active: false};
 
 const PaymentMethod = require("../../../server/db/models/payment-method");
 const db = require("../../../server/db");
-
 
 describe("Test payment method database model", ()=>{
     before(async()=>{
@@ -20,6 +19,7 @@ describe("Test payment method database model", ()=>{
         // not using strictEqual because in DB it is stored as NUMERIC (which is parsed back as string for numeric precision)
         assert.equal(paymentMethod.feeFixed, sample1.feeFixed);
         assert.equal(paymentMethod.feePercentage, sample1.feePercentage);
+        assert.equal(paymentMethod.waitingDays, sample1.waitingDays);
         assert.strictEqual(paymentMethod.active, true); // testing if default value was set
     });
     it("should read the payment method that was just created", async()=>{
@@ -29,6 +29,7 @@ describe("Test payment method database model", ()=>{
         assert.strictEqual(paymentMethod.name, sample1.name);
         assert.equal(paymentMethod.feeFixed, sample1.feeFixed);
         assert.equal(paymentMethod.feePercentage, sample1.feePercentage);
+        assert.equal(paymentMethod.waitingDays, sample1.waitingDays);
         assert.strictEqual(paymentMethod.active, true); // testing if default value was set
     });
     it("should create a payment method with setting active=false", async()=>{
@@ -38,6 +39,7 @@ describe("Test payment method database model", ()=>{
         assert.strictEqual(paymentMethod.name, sample2.name);
         assert.equal(paymentMethod.feeFixed, sample2.feeFixed);
         assert.equal(paymentMethod.feePercentage, sample2.feePercentage);
+        assert.equal(paymentMethod.waitingDays, sample2.waitingDays);
         assert.strictEqual(paymentMethod.active, false); // testing if default value was set
     });
     it("should have 2 entries in table", async()=>{

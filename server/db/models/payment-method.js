@@ -26,6 +26,12 @@ module.exports = require("../db").define("paymentMethod", {
         comment: "% of the transaction",
         field: "fee_percentage"
     },
+    waitingDays: {
+        type: DataTypes.SMALLINT,
+        allowNull: false,
+        comment: "number of waiting days to pay the user for a transaction",
+        field: "waiting_days"
+    },
     active: {
         type: DataTypes.BOOLEAN,
         allowNull: false,

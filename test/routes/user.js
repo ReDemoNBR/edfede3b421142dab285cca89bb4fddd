@@ -1,7 +1,7 @@
 const {assert} = require("chai");
 const fetch = require("node-fetch");
 const worker = require("../../server/worker");
-const db = require("../../server/db")
+const db = require("../../server/db");
 const {SERVER_API_PORT, DEFAULT_LIMIT, DEFAULT_MAX_LIMIT} = require("../../env");
 const sample1 = {name: "John Smith", email: "johnsmith@example.com"};
 const sample2 = {name: "John Doe", email: "johndoe@example.com"};
@@ -11,21 +11,14 @@ const sample5 = {name: "Unnamed", email: "me@example.com"};
 
 const headers = {"Content-Type": "application/json"};
 
-before(async()=>{
-    await db.drop();
-    await worker;
-});
-
 let tmpUser;
 
 // eslint-disable-next-line max-lines-per-function
 describe("Test user CRUD", ()=>{
-    it("should find no user", async()=>{
-        const response = await fetch(`http://localhost:${SERVER_API_PORT}/user`);
-        const body = await response.json();
-        assert.strictEqual(response.status, 404);
-        assert.strictEqual(response.statusText, "Not Found");
-        assert.property(body, "error");
+    before(async()=>{
+        await db.drop();
+        await db.sync();
+        await worker;
     });
     it("should create an user", async()=>{
         const response = await fetch(`http://localhost:${SERVER_API_PORT}/user`, {method: "POST", headers, body: JSON.stringify(sample1)});
@@ -44,6 +37,8 @@ describe("Test user CRUD", ()=>{
         assert.strictEqual(response.statusText, "OK");
         assert.strictEqual(body.id, tmpUser.id);
         assert.strictEqual(body.name, tmpUser.name);
+        assert.property(body, "waitingFunds");
+        assert.property(body, "available");
     });
     it("should NOT create an user because it has the same email", async()=>{
         const response = await fetch(`http://localhost:${SERVER_API_PORT}/user`, {method: "POST", headers, body: JSON.stringify(sample1)});

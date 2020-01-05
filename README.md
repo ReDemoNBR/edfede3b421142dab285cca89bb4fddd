@@ -1,9 +1,18 @@
 # edfede3b421142dab285cca89bb4fddd
 
+
 ## **INTRODUCTION**
 Simple PSP (Payment Service Provider)
 
+
 ## **SUMMARY**
+-   [**Purpose**](#purpose)
+-   [**Requirements**](#requirements)
+-   [**Environment Variables**](#environment-variables)
+-   [**Project Quirks And Tips**](#project-quirks-and-tips)
+-   [**Routes Documentations**](#routes-documentations)
+-   [**Running Tests**](#running-tests)
+-   [**Local Development**](#local-development)
 
 
 ## **PURPOSE**
@@ -12,7 +21,7 @@ payables for the customers so they know when they can redeem the money of each t
 
 
 ## **REQUIREMENTS**
--   GNU/Linux v5.4.6 environment
+-   GNU/Linux v5.4.7 environment
 -   Bash v5.0.11
 -   NodeJS v13.5.0 (with **_harmony_**)
 -   NPM v6.13.4
@@ -56,7 +65,37 @@ loaded by Systemd service manager (file path is located in `/etc/game-pulse/env.
 -   **Health Routes**: This project contains 2 _health check_ routes
     -   `/health/ready` returns HTTP `204` if is online. This is good if you run this project in multiple backends behind a single proxy (like a load balancer) and you need to check if the backend still available
     -   `/health/status` returns server information, like memory usage, number of CPUs, OS etc
+-   **Request body treatment**: All texts from any incoming request body are trimmed and have the multiple spacing removed.
 -   **Cluster Master process**: The cluster process has a master process and it doesn't listen to connections nor access the database. It only manages the other worker processes
 -   **Cluster Worker processes**: The cluster process must have at least 1 worker process in order to listen to connection and access database as the master process isn't designed for this
--   **Database Schemas**: The server requires that the Database has the schemas needed already created, so there is a script in `server/db/create-schemas.js` (run `node server/db/create-schemas.js` to execute it) that will create the required schemas. In case the schemas are already created, the command will not drop the older ones and recreate them. The command `npm start` runs this script before starting the server with `node server/index.js` command. If you already have the schemas created, you can safely run `node server/index.js`
--   **Creating a local S3/MinIO server**: Run `npm run minio` to create and add the initial configuration (on `localhost:9000` with the default access and secret keys). If you need further configuration, check the `scripts/minio.sh` bash script (supports `-h` option for usage help)
+
+
+## **ROUTES DOCUMENTATIONS**
+The routes follow the RESTful API standard. It always responds with JSON (`application/json`) format. It accepts request bodies in JSON (`application/json`) and URL-Encoded (`application/x-www-form-urlencoded`).  
+For the **_user_** entity, all CRUD (create, read, update and delete) operations were implemented.  
+Meanwhile, the **_transaction_** entity only has `list` and `create` operations. The `update`, `patch` and `delete` operations were not implemented to avoid messing with the transaction history.
+
+As was written in [Project Quirks And Tips](#project-quirks-and-tips), there are two routes for health checking the service in addition to the service ones, this way a load balancer works nicely with this service.
+
+
+### Main routes
+#### `POST /transaction`
+Create a transaction
+
+#### `GET /user/:userId/payables`
+List the payables of the user
+
+#### `GET /user/:userId`
+Shows the user and the amounts of money available and pending.
+
+
+## **RUNNING TESTS**
+To run tests you need a local PostgreSQL database server, with a database named `money_test`, owned by user `admin` that has password `admin`. You can change the user and the password by setting environment variables.
+-   A local working installation of PostgreSQL
+-   A database named `money_test`
+-   A database user named `admin` with password set to `admin`. _This is can be changed, but to set another user/password you need to set [environment variables](#environment-variables)_
+
+
+## **LOCAL DEVELOPMENT**
+To run locally, you should use `npm start` command. All [environment variables](#environment-variables) loaded are the default ones,
+so please have the database already created and have it ready for connection before starting the service.

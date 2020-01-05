@@ -10,10 +10,9 @@ describe("Test transaction database model", ()=>{
     before(async()=>{
         await db.drop();
         await db.sync();
-        const paymentMethod = await PaymentMethod.create({name: "debit", feeFixed: 1, feePercentage: 5}); // sample payment method
+        const paymentMethod = await PaymentMethod.create({name: "debit", feeFixed: 1, feePercentage: 5, waitingDays: 0}); // sample payment method
         sample.paymentMethodId = paymentMethod.id;
     });
-
     it("should create a transaction", async()=>{
         const transaction = await Transaction.create(sample);
         assert.isObject(transaction);
